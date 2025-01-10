@@ -29,16 +29,15 @@ const vue_app = Vue.createApp({
       },
       data() {
           return {
-              // Step 1: Add appTitle and owner
+              // App Title and Owner
               appTitle: "My Movie Gallery",
-              owner: "Your GitHub Username",
+              owner: "YourGitHubUsername",
   
-              // Step 2: Add movies array
+              // Movies Array
               movies: []
           };
       },
       methods: {
-          // Step 3, 4, 5: Add methods for liking, disliking, and toggling posters
           like(movie) {
               movie.likes++;
           },
@@ -47,6 +46,30 @@ const vue_app = Vue.createApp({
           },
           nextPoster(movie) {
               movie.posterindex = (movie.posterindex + 1) % movie.posters.length;
+          },
+          // Step 6: Reset likes and dislikes
+          resetFeedback(movie) {
+              movie.likes = 0;
+              movie.dislikes = 0;
+          },
+          // Step 7: Sort movies by likes
+          sortByLikes() {
+              this.movies.sort((a, b) => b.likes - a.likes);
+          },
+          // Step 8: Search movies by title
+          searchMovies(query) {
+              return this.movies.filter(movie =>
+                  movie.title.toLowerCase().includes(query.toLowerCase())
+              );
+          },
+          // Step 9: Display total runtime
+          totalRuntime() {
+              return this.movies.reduce((sum, movie) => sum + movie.runtime, 0);
+          },
+          // Step 10: Display movie with the highest score
+          highestScore() {
+              return this.movies.reduce((max, movie) =>
+                  movie.iscore > max.iscore ? movie : max, this.movies[0]);
           }
       }
   });
