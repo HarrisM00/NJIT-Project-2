@@ -13,61 +13,56 @@
 	  
 	<!-- DO NOT CHANGE ANYTHING ABOVE THIS LINE-->
 
-	<!-- Javascript Framework (e.g., vue.js) (ADD HERE) -->
-
-
+	<!-- Javascript Framework (Vue.js) -->
+	<script src="https://unpkg.com/vue@3.2.45"></script>
 
 </head>
 
-  <body>
+<body>
 	<div id="vue_app" class="container">
 
 	    <div class="header">
-
 	      <div class="container">
-	        <h1 id="app_title">%title%</h1>
+	        <h1 id="app_title">{{ appTitle }}</h1>
 	      </div>
-
 	    </div>
 
 	    <div class="main">
-
-	      <div class="row">
-
+	      <div class="row" v-for="movie in movies" :key="movie.title">
 	        <div class="col-md-6">
 	            <div class="thumbnail">
-
-						<img class="poster img-fluid" />
-						<div class="imageInfo">%posterindex%</div>
-
-						<p class="title">%title% (%country%)</p>
-						<p class="score"><i class="bi bi-star" aria-hidden="true"></i> %iscore% </p>
-						<p class="runtime">Runtime: %runtime%</p>
-						<p class="released">Released: %released% | Rated: %rating%</p>
-						<p class="websites">Websites: <a> imdb </a> | <a>website</a></p>
-
-			            <div class="social">
-			              <p class="likes"><i class="bi bi-hand-thumbs-up" aria-hidden="true"></i> %likes%</p>
-			              <p class="dislikes"><i class="bi bi-hand-thumbs-down"></i> %dislikes%</p>
-			            </div>
+					<img class="poster img-fluid" :src="movie.posters[movie.posterindex]" :alt="movie.title" />
+					<div class="imageInfo">Poster {{ movie.posterindex + 1 }} of {{ movie.posters.length }}</div>
+					<p class="title">{{ movie.title }} ({{ movie.country }})</p>
+					<p class="score"><i class="bi bi-star" aria-hidden="true"></i> {{ movie.iscore }}</p>
+					<p class="runtime">Runtime: {{ movie.runtime }} minutes</p>
+					<p class="released">
+						Released: {{ movie.released[1] }}/{{ movie.released[2] }}/{{ movie.released[0] }} | Rated: {{ movie.rating }}
+					</p>
+					<p class="websites">
+						Websites: 
+						<a :href="movie.imdb" target="_blank">IMDB</a> | 
+						<a :href="movie.website" target="_blank">Website</a>
+					</p>
+					<div class="social">
+			              <p class="likes"><i class="bi bi-hand-thumbs-up" aria-hidden="true"></i> {{ movie.likes }}</p>
+			              <p class="dislikes"><i class="bi bi-hand-thumbs-down"></i> {{ movie.dislikes }}</p>
+			        </div>
 	            </div>
 	        </div>
-
 	      </div>
 	    </div>
 
 	    <div class="footer">
 	      <div class="container">
 			<a id="github" class="btn btn-lg btn-warning">
-				<i class="bi bi-github me-2"></i>%owner%
+				<i class="bi bi-github me-2"></i>{{ owner }}
 	  		</a>
 	      </div>
 	    </div>
 	</div>
 
-  	<!-- This load the Vue.js code -->
+  	<!-- This loads the Vue.js code -->
 	<script type="text/javascript" src="site.js"></script>
-
-
 </body>
 </html>

@@ -22,24 +22,34 @@
 
 
 const vue_app = Vue.createApp({
-      // This automatically imports your movies.json file and puts it into
-      //   the variable: movies
-      created () {
-            fetch('movies.json').then(response => response.json()).then(json => {
-                  this.movies = json
-            })
+      created() {
+          fetch('movies.json').then(response => response.json()).then(json => {
+              this.movies = json;
+          });
       },
       data() {
-        return {
-            // This holds your movies.json data.
-            movies: [],
-            /* ADD ADDITIONAL VARIABLES FOR STEP 3 HERE */
-         
-      }
-    },
+          return {
+              // Step 1: Add appTitle and owner
+              appTitle: "My Movie Gallery",
+              owner: "Your GitHub Username",
+  
+              // Step 2: Add movies array
+              movies: []
+          };
+      },
       methods: {
-            /* ADD FUNCTIONS/METHODS FOR STEP 7 HERE */
+          // Step 3, 4, 5: Add methods for liking, disliking, and toggling posters
+          like(movie) {
+              movie.likes++;
+          },
+          dislike(movie) {
+              movie.dislikes++;
+          },
+          nextPoster(movie) {
+              movie.posterindex = (movie.posterindex + 1) % movie.posters.length;
+          }
       }
-})
-
-vue_app.mount("#vue_app")
+  });
+  
+  vue_app.mount("#vue_app");
+  
