@@ -27,8 +27,29 @@
 	      </div>
 	    </div>
 
+	    <!-- Search Bar -->
+	    <div class="search-bar my-3">
+	        <input type="text" v-model="searchQuery" placeholder="Search movies..." class="form-control">
+	    </div>
+
+	    <!-- Buttons for Runtime and Sorting -->
+	    <div class="actions my-3">
+	        <button class="btn btn-primary" @click="sortByLikes">Sort by Likes</button>
+	        <button class="btn btn-info" @click="showTotalRuntime">Show Total Runtime</button>
+	    </div>
+
+	    <!-- Total Runtime -->
+	    <div v-if="totalRuntimeMessage" class="alert alert-success">
+	        {{ totalRuntimeMessage }}
+	    </div>
+
+	    <!-- Highlight Movie with Highest Score -->
+	    <div v-if="highestScoringMovie" class="alert alert-warning">
+	        Highest Scoring Movie: {{ highestScoringMovie.title }} (Score: {{ highestScoringMovie.iscore }})
+	    </div>
+
 	    <div class="main">
-	      <div class="row" v-for="movie in movies" :key="movie.title">
+	      <div class="row" v-for="movie in filteredMovies" :key="movie.title">
 	        <div class="col-md-6">
 	            <div class="thumbnail">
 					<img class="poster img-fluid" :src="movie.posters[movie.posterindex]" :alt="movie.title" @click="nextPoster(movie)" />

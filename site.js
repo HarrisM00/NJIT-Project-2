@@ -29,13 +29,21 @@ const vue_app = Vue.createApp({
       },
       data() {
           return {
-              // App Title and Owner
               appTitle: "My Movie Gallery",
-              owner: "YourGitHubUsername",
-  
-              // Movies Array
-              movies: []
+              owner: "HarrisM00",
+              movies: [],
+              searchQuery: "",
+              totalRuntimeMessage: "",
+              highestScoringMovie: null
           };
+      },
+      computed: {
+          filteredMovies() {
+              if (!this.searchQuery) return this.movies;
+              return this.movies.filter(movie =>
+                  movie.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+              );
+          }
       },
       methods: {
           like(movie) {
@@ -47,32 +55,27 @@ const vue_app = Vue.createApp({
           nextPoster(movie) {
               movie.posterindex = (movie.posterindex + 1) % movie.posters.length;
           },
-          // Step 6: Reset likes and dislikes
           resetFeedback(movie) {
               movie.likes = 0;
               movie.dislikes = 0;
           },
-          // Step 7: Sort movies by likes
           sortByLikes() {
               this.movies.sort((a, b) => b.likes - a.likes);
           },
-          // Step 8: Search movies by title
-          searchMovies(query) {
-              return this.movies.filter(movie =>
-                  movie.title.toLowerCase().includes(query.toLowerCase())
-              );
+          showTotalRuntime() {
+              const totalRuntime = this.movies.reduce((sum, movie) => sum + movie.runtime, 0);
+              this.totalRuntimeMessage = `Total Runtime: ${totalRuntime} minutes`;
           },
-          // Step 9: Display total runtime
-          totalRuntime() {
-              return this.movies.reduce((sum, movie) => sum + movie.runtime, 0);
-          },
-          // Step 10: Display movie with the highest score
           highestScore() {
-              return this.movies.reduce((max, movie) =>
+              this.highestScoringMovie = this.movies.reduce((max, movie) =>
                   movie.iscore > max.iscore ? movie : max, this.movies[0]);
           }
+      },
+      mounted() {
+          this.highestScore(); // highest scoring movie on load
       }
   });
   
   vue_app.mount("#vue_app");
+  
   
